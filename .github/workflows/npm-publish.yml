@@ -32,8 +32,8 @@ jobs:
       - name: Runs on Pre-Release
         if: 'github.event.release.prerelease'
         run:
-          npm version prerelease --pre-id rc
-          npm publish --tag rc --access public
+          npm version prerelease --preid=rc
+          npm publish --tag beta --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Runs on Release
