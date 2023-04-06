@@ -30,12 +30,14 @@ jobs:
       - run: npm ci
 
       - name: Runs on Pre-Release
-        if: 'github.event.prerelease'
-        run: npm publish --tag latest --tag next --tag beta --access public
+        if: 'github.event.release.prerelease'
+        run:
+          npm version prerelease --pre-id rc
+          npm publish --tag latest --tag next --tag beta --tag rc --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Runs on Release
-        if: '!github.event.prerelease'
+        if: '!github.event.release.prerelease'
         run: npm publish --tag latest --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
