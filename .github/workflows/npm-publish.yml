@@ -28,7 +28,15 @@ jobs:
           node-version: 16
           registry-url: https://registry.npmjs.org/
       - run: npm ci
-      - run: npm publish --access public
+
+      - name: Runs on Pre-Release
+        if: 'github.event.prerelease'
+        run: npm publish --tag latest --tag next --tag beta --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          
+      - name: Runs on Release
+        if: '!github.event.prerelease'
+        run: npm publish --tag latest --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
