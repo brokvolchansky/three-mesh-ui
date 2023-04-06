@@ -31,7 +31,7 @@ jobs:
 
       - name: Runs on Pre-Release
         if: 'github.event.release.prerelease'
-        run:
+        run: |
           npm version prerelease --preid=rc
           npm publish --tag beta --access public
         env:
